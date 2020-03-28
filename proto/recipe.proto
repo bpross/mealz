@@ -1,0 +1,72 @@
+syntax = "proto3";
+package mealz;
+
+option go_package = "github.com/bpross/mealz/proto";
+
+enum Ethnicity {
+    UNKNOWN_ETHNICITY = 0;
+    AMERICAN = 1;
+    CARIBBEAN = 2;
+    CHINESE = 3;
+    ASIAN = 4;
+    ITALIAN = 5;
+    THAI = 6;
+    CAJUN = 7;
+    JAPANESE = 8;
+    MOROCCAN = 9;
+}
+
+enum Season {
+    UNKNOWN_SEASON = 0;
+    WINTER = 1;
+    SPRING = 2;
+    SUMMER = 3;
+    FALL = 4;
+}
+
+enum UnitOfMeasure {
+   UNKNOWN_UNITOFMEASURE = 0;
+   TEASPOON = 1;
+   TABLESPOON = 2;
+   POUND = 3;
+   OUNCE = 4;
+   CUP = 5;
+   PIECE = 6;
+}
+
+message Ingredient {
+    bytes object_id = 1;
+    string title = 2;
+    UnitOfMeasure unit_of_measure = 3;
+    float amount = 4;
+    bool vegetarian = 5;
+}
+
+message Recipe {
+    bytes object_id = 1;
+    string title = 2;
+    bool vegetarian = 3;
+    Ethnicity ethnicity = 4;
+    Season season = 5;
+    string source = 6;
+    repeated Ingredient ingredients = 7;
+}
+
+service RecipeService {
+    rpc Get(RecipeGetRequest) returns (Recipe);
+    rpc Insert(RecipeRequest) returns (Recipe);
+    rpc Update(RecipeRequest) returns (Recipe);
+    rpc Delete(RecipeDeleteRequest) returns (Recipe);
+}
+
+message RecipeGetRequest {
+    bytes object_id = 1;
+}
+
+message RecipeRequest{
+    Recipe recipe = 1;
+}
+
+message RecipeDeleteRequest {
+    bytes object_id = 1;
+}
