@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "CREATING $POSTGRES_DATABASE..."
+psql --host "${POSTGRES_HOST:-localhost}" --command "CREATE DATABASE $POSTGRES_DATABASE;"

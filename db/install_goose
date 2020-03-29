@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source ~/.profile
+echo "INSTALLING goose..."
+go get -u github.com/pressly/goose/cmd/goose
+echo "COPYING goose ..."
+cp $(which goose) /usr/local/bin/goose
+echo "GOOSE SETUP COMPLETE"

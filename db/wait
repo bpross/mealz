@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+readonly TIMEOUT_S=10
+readonly INTERVAL=0.5
+
+printf 'waiting for postgres...\n'
+start_ts=$(date +%s)
+set +e
+while :
+do
+  pg_isready --host "${POSTGRES_HOST:-localhost}"
+  result=$?
+  end_ts=$(date +%s)
+  duration=$((end_ts - start_ts))
+  if [[ $result  -eq 0 ]]; then
+    echo "   ...${duration}s"
+    set -e
+    break
+  fi
+  if [[ $duration -gt ${TIMEOUT_S} ]]; then
+    echo "  ...timeout (${TIMEOUT_S}s)"
+    set -e
+    exit ${duration}
+  fi
+  sleep ${INTERVAL}
+done

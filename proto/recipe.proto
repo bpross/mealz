@@ -47,16 +47,16 @@ message Recipe {
     string title = 2;
     bool vegetarian = 3;
     Ethnicity ethnicity = 4;
-    Season season = 5;
+    repeated Season season = 5;
     string source = 6;
     repeated Ingredient ingredients = 7;
 }
 
 service RecipeService {
+    rpc Delete(RecipeDeleteRequest) returns (Recipe);
     rpc Get(RecipeGetRequest) returns (Recipe);
     rpc Insert(RecipeRequest) returns (Recipe);
     rpc Update(RecipeRequest) returns (Recipe);
-    rpc Delete(RecipeDeleteRequest) returns (Recipe);
 }
 
 message RecipeGetRequest {

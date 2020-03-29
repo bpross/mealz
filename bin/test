@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "running all unit test suites"
+echo "updating dependencies"
+go mod download >/dev/null 2>&1 
+ginkgo --race --cover --progress caption/ dao/ dao/cache/ dao/combined/ dao/memory/ handler/ datastore/

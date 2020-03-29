@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    volumes:
+      - ./:/mealz
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    networks:
+      - backend
+    expose:
+      - "8080"
+    ports:
+        - "8080:8080"
+    env_file:
+      - common.env
+
+  cli:
+    build:
+      context: .
+      dockerfile: Dockerfile.cli
+    env_file:
+      - common.env
+
+  postgres:
+    image: postgres:9.6.1
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+    env_file:
+      - common.env
+    volumes:
+      - ./db:/db
+
+networks:
+  backend: {}
