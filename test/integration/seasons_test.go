@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"database/sql"
 	"io/ioutil"
 
 	. "github.com/onsi/ginkgo"
@@ -10,18 +9,14 @@ import (
 	log "github.com/sirupsen/logrus"
 	"labix.org/v2/mgo/bson"
 
-	"github.com/bpross/mealz/config"
 	dao "github.com/bpross/mealz/dao/postgres"
-	"github.com/bpross/mealz/postgres"
 	mealzpb "github.com/bpross/mealz/proto"
 )
 
-var _ = FDescribe("Recipes Integration", func() {
+var _ = Describe("Recipes Integration", func() {
 	var (
 		ctx    context.Context
-		c      *config.PostgresConfig
 		logger *log.Logger
-		db     *sql.DB
 		r      *dao.Recipes
 		s      *dao.Seasons
 	)
@@ -32,20 +27,8 @@ var _ = FDescribe("Recipes Integration", func() {
 		logger = log.New()
 		logger.Out = ioutil.Discard
 
-		var configErr error
-		c, configErr = config.NewPostgresConfig()
-		Expect(configErr).To(BeNil())
-
-		var dbErr error
-		db, dbErr = postgres.Connect(c)
-		Expect(dbErr).To(BeNil())
-
 		r = dao.NewRecipes(db, logger)
 		s = dao.NewSeasons(db, logger)
-	})
-
-	AfterEach(func() {
-		db.Close()
 	})
 
 	Context("Associate", func() {
