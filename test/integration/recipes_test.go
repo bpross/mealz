@@ -5,7 +5,6 @@ package integration
 import (
 	"context"
 	"database/sql"
-	//"fmt"
 	"io/ioutil"
 
 	. "github.com/onsi/ginkgo"

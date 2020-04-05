@@ -1,5 +1,5 @@
 #!/bin/bash
 go mod download >/dev/null 2>&1 
-DIRS="./dao/ ./dao/postgres/ ./config/ ./postgres/"
+DIRS="./dao/ ./dao/postgres/ ./dao/postgres/queries/ ./config/ ./postgres/"
 golint $DIRS 
 go vet $DIRS 
