@@ -10,6 +10,8 @@ services:
       - backend
     volumes:
       - ./:/mealz
+    env_file:
+      - common.env
 
   api:
     build:
@@ -30,6 +32,8 @@ services:
       dockerfile: Dockerfile.cli
     env_file:
       - common.env
+    networks:
+      - backend
 
   postgres:
     image: postgres:9.6.1
@@ -40,6 +44,8 @@ services:
       - common.env
     volumes:
       - ./db:/db
+    networks:
+      - backend
 
 networks:
   backend: {}

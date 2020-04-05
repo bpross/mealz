@@ -22,5 +22,6 @@ COPY db/dbconf.yml db/dbconf.yml
 COPY db/create db/create
 COPY db/install_goose db/install_goose
 COPY db/migrate db/migrate
+COPY db/wait db/wait
 
 RUN db/install_goose

@@ -2,4 +2,4 @@
 echo "running all integration suites"
 echo "updating dependencies"
 go mod download >/dev/null 2>&1 
-ginkgo --race --cover --progress -tags=integration tests/integration/
+ginkgo --race --cover --progress -tags=integration test/integration/
