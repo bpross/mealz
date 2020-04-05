@@ -4,8 +4,10 @@ CREATE TYPE unitOfMeasure AS ENUM ('TEASPOON', 'TABLESPOON', 'POUND', 'OUNCE', '
 
 CREATE TABLE ingredient_to_recipe(
     id SERIAL PRIMARY KEY,
-    ingredient_id INTEGER REFERENCES ingredient(id) NOT NULL,
-    recipe_id INTEGER REFERENCES recipe(id) NOT NULL,
+    ingredient_id INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredient(id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_ID) REFERENCES recipe(id) ON DELETE CASCADE,
     unit_of_measure unitOfMeasure,
     amount float
 );

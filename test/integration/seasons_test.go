@@ -195,5 +195,37 @@ var _ = Describe("Recipes Integration", func() {
 				})
 			})
 		})
+
+		Context("with a recipe that was deleted", func() {
+			BeforeEach(func() {
+				insertRecipe := &mealzpb.Recipe{
+					Title:      "test-recipe",
+					Vegetarian: true,
+					Ethnicity:  mealzpb.Ethnicity_AMERICAN,
+					Source:     "test-source",
+				}
+
+				retRecipe, insertErr := r.Insert(ctx, insertRecipe)
+				Expect(insertErr).To(BeNil())
+				Expect(retRecipe).To(Equal(insertRecipe))
+
+				recipeObjectID = bson.ObjectId(retRecipe.ObjectId)
+
+				associateSeasons := []string{"winter", "spring", "summer", "fall"}
+				associateErr := s.Associate(ctx, recipeObjectID, associateSeasons)
+				Expect(associateErr).To(BeNil())
+
+				_, deleteErr := r.Delete(ctx, recipeObjectID)
+				Expect(deleteErr).To(BeNil())
+			})
+
+			It("should not return an error", func() {
+				Expect(err).To(BeNil())
+			})
+
+			It("should NOT return seasons", func() {
+				Expect(seasons).To(BeEmpty())
+			})
+		})
 	})
 })
