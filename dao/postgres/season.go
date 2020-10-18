@@ -42,7 +42,7 @@ func (s *Seasons) Associate(ctx context.Context, recipeObjectID bson.ObjectId, s
 		return fmt.Errorf("must specify at least one season")
 	}
 
-	logger := s.logger.WithField("recipe_object_id", recipeObjectID)
+	logger := s.logger.WithField("recipe_object_id", recipeObjectID.Hex())
 
 	var id int
 
@@ -88,7 +88,7 @@ func (s *Seasons) Get(ctx context.Context, season string) (int, error) {
 
 // GetRecipeSeasons returns the seasons for the recipe represented by the object_id
 func (s *Seasons) GetRecipeSeasons(ctx context.Context, recipeObjectID bson.ObjectId) ([]mealzpb.Season, error) {
-	logger := s.logger.WithField("recipe_object_id", recipeObjectID)
+	logger := s.logger.WithField("recipe_object_id", recipeObjectID.Hex())
 	logger.Infoln("getting seasons")
 
 	objB := []byte(recipeObjectID)
